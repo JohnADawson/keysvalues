@@ -1,4 +1,4 @@
-"""Functions for key-value pairs, instead of values and key functions.
+"""Functions for, instead of values and key functions, key-value pairs.
 
     A key function or collation function is a callable that returns a
     value used for sorting or ordering. For example, locale.strxfrm() is

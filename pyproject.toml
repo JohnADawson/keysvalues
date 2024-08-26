@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "keysvalues"
-version = "1.0.0"
-description = "Functions for, instead of values and a key function, key-value pairs."
+version = "1.0.1"
+description = "Functions for, instead of values and key functions, key-value pairs."
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [{name = "John Dawson", email = "john.a.dawson@proton.me"}]
