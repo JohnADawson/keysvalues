@@ -118,21 +118,21 @@ def assort_into(make, grow):
     iterable of depth keys and a value.
 
     The result returns a defaultdict of defaultdicts of defaultdicts of
-    ... defaultdicts of gatherings made by make and grown by grow where
-    the number of levels of defaultdicts is depth.
+    ... defaultdicts of bins made by make and grown by grow where the
+    number of levels of defaultdicts is depth.
     """
 
-    def make_gatherings(depth=1):
+    def make_bins(depth=1):
         if depth:
-            return collections.defaultdict(lambda: make_gatherings(depth - 1))
+            return collections.defaultdict(lambda: make_bins(depth - 1))
         return make()
 
     def assort(items, depth=1):
-        gatherings = make_gatherings(depth)
+        bins = make_bins(depth)
         for *keys, value in items:
-            gathering = functools.reduce(operator.getitem, keys, gatherings)
-            grow(gathering, value)
-        return gatherings
+            bin_ = functools.reduce(operator.getitem, keys, bins)
+            grow(bin_, value)
+        return bins
 
     return assort
 
@@ -172,9 +172,9 @@ set_assort.__doc__ = """Assort values into sets by keys.
     """
 
 
-def update(gathering, item):
-    """Update gathering with item."""
-    return gathering.update([item])
+def update(bin_, item):
+    """Update bin_ with item."""
+    return bin_.update([item])
 
 
 dict_assort = assort_into(dict, update)
