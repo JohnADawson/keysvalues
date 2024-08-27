@@ -29,16 +29,16 @@ sort
     Like sorted, sort values by keys.
 group
     Like itertools.groupby, group values by keys.
-gather_in
+gather_into
     Return a function that gathers values by keys.
 list_gather
-    Gather values in lists by keys.
+    Gather values into lists by keys.
 set_gather
-    Gather values in sets by keys.
+    Gather values into sets by keys.
 dict_gather
-    Gather values in dicts by keys.
+    Gather values into dicts by keys.
 counter_gather
-    Gather values in Counters by keys.
+    Gather values into Counters by keys.
 """
 
 import collections
@@ -110,7 +110,7 @@ def group(items):
     return ((key, map(next, group_)) for key, group_ in groups)
 
 
-def gather_in(make, grow):
+def gather_into(make, grow):
     """Return a function that gathers values by keys.
 
     The result's parameter list is (items, depth=1). items ought to be
@@ -137,8 +137,8 @@ def gather_in(make, grow):
     return gather
 
 
-list_gather = gather_in(list, list.append)
-list_gather.__doc__ = """Gather values in lists by keys.
+list_gather = gather_into(list, list.append)
+list_gather.__doc__ = """Gather values into lists by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
@@ -154,8 +154,8 @@ list_gather.__doc__ = """Gather values in lists by keys.
     []
     """
 
-set_gather = gather_in(set, set.add)
-set_gather.__doc__ = """Gather values in sets by keys.
+set_gather = gather_into(set, set.add)
+set_gather.__doc__ = """Gather values into sets by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
@@ -177,8 +177,8 @@ def update(gathering, item):
     return gathering.update([item])
 
 
-dict_gather = gather_in(dict, update)
-dict_gather.__doc__ = """Gather values in dicts by keys.
+dict_gather = gather_into(dict, update)
+dict_gather.__doc__ = """Gather values into dicts by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
@@ -197,8 +197,8 @@ dict_gather.__doc__ = """Gather values in dicts by keys.
     {}
     """
 
-counter_gather = gather_in(collections.Counter, update)
-counter_gather.__doc__ = """Gather values in Counters by keys.
+counter_gather = gather_into(collections.Counter, update)
+counter_gather.__doc__ = """Gather values into Counters by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
