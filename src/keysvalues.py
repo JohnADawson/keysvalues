@@ -29,16 +29,16 @@ sort
     Like sorted, sort values by keys.
 group
     Like itertools.groupby, group values by keys.
-gather_into
-    Return a function that gathers values by keys.
-list_gather
-    Gather values into lists by keys.
-set_gather
-    Gather values into sets by keys.
-dict_gather
-    Gather values into dicts by keys.
-counter_gather
-    Gather values into Counters by keys.
+assort_into
+    Return a function that assorts values by keys.
+list_assort
+    Assort values into lists by keys.
+set_assort
+    Assort values into sets by keys.
+dict_assort
+    Assort values into dicts by keys.
+counter_assort
+    Assort values into Counters by keys.
 """
 
 import collections
@@ -110,8 +110,8 @@ def group(items):
     return ((key, map(next, group_)) for key, group_ in groups)
 
 
-def gather_into(make, grow):
-    """Return a function that gathers values by keys.
+def assort_into(make, grow):
+    """Return a function that assorts values by keys.
 
     The result's parameter list is (items, depth=1). items ought to be
     an iterable and depth a number such that each member of items is an
@@ -127,47 +127,47 @@ def gather_into(make, grow):
             return collections.defaultdict(lambda: make_gatherings(depth - 1))
         return make()
 
-    def gather(items, depth=1):
+    def assort(items, depth=1):
         gatherings = make_gatherings(depth)
         for *keys, value in items:
             gathering = functools.reduce(operator.getitem, keys, gatherings)
             grow(gathering, value)
         return gatherings
 
-    return gather
+    return assort
 
 
-list_gather = gather_into(list, list.append)
-list_gather.__doc__ = """Gather values into lists by keys.
+list_assort = assort_into(list, list.append)
+list_assort.__doc__ = """Assort values into lists by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
-    >>> keysvalues.list_gather([(2, 0), (3, 1), (2, 1), (2, 0)])
+    >>> keysvalues.list_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: [0, 1, 0], 3: [1]}
-    >>> keysvalues.list_gather([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
+    >>> keysvalues.list_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
     {5: {2: [0, 0], 3: [1]}, 4: {2: [1]}}
-    >>> keysvalues.list_gather([(0,), (1,), (1,), (0,)], depth=0)
+    >>> keysvalues.list_assort([(0,), (1,), (1,), (0,)], depth=0)
     [0, 1, 1, 0]
-    >>> keysvalues.list_gather([])
+    >>> keysvalues.list_assort([])
     {}
-    >>> keysvalues.list_gather([], depth=0)
+    >>> keysvalues.list_assort([], depth=0)
     []
     """
 
-set_gather = gather_into(set, set.add)
-set_gather.__doc__ = """Gather values into sets by keys.
+set_assort = assort_into(set, set.add)
+set_assort.__doc__ = """Assort values into sets by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
-    >>> keysvalues.set_gather([(2, 0), (3, 1), (2, 1), (2, 0)])
+    >>> keysvalues.set_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: {0, 1}, 3: {1}}
-    >>> keysvalues.set_gather([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
+    >>> keysvalues.set_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
     {5: {2: {0}, 3: {1}}, 4: {2: {1}}}
-    >>> keysvalues.set_gather([(0,), (1,), (1,), (0,)], depth=0)
+    >>> keysvalues.set_assort([(0,), (1,), (1,), (0,)], depth=0)
     {0, 1}
-    >>> keysvalues.set_gather([])
+    >>> keysvalues.set_assort([])
     {}
-    >>> keysvalues.set_gather([], depth=0)
+    >>> keysvalues.set_assort([], depth=0)
     set()
     """
 
@@ -177,39 +177,39 @@ def update(gathering, item):
     return gathering.update([item])
 
 
-dict_gather = gather_into(dict, update)
-dict_gather.__doc__ = """Gather values into dicts by keys.
+dict_assort = assort_into(dict, update)
+dict_assort.__doc__ = """Assort values into dicts by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
-    >>> keysvalues.dict_gather([(5, (2, 0)), (5, (3, 1)), (4, (2, 1)), (5, (2, 0))])
+    >>> keysvalues.dict_assort([(5, (2, 0)), (5, (3, 1)), (4, (2, 1)), (5, (2, 0))])
     {5: {2: 0, 3: 1}, 4: {2: 1}}
-    >>> keysvalues.dict_gather(
+    >>> keysvalues.dict_assort(
     ...     [(7, 5, (2, 0)), (8, 5, (3, 1)), (6, 4, (2, 1)), (8, 5, (2, 0))],
     ...     depth=2,
     ... )
     {7: {5: {2: 0}}, 8: {5: {3: 1, 2: 0}}, 6: {4: {2: 1}}}
-    >>> keysvalues.dict_gather([((2, 0),), ((3, 1),), ((2, 1),), ((2, 0),)], depth=0)
+    >>> keysvalues.dict_assort([((2, 0),), ((3, 1),), ((2, 1),), ((2, 0),)], depth=0)
     {2: 0, 3: 1}
-    >>> keysvalues.dict_gather([])
+    >>> keysvalues.dict_assort([])
     {}
-    >>> keysvalues.dict_gather([], depth=0)
+    >>> keysvalues.dict_assort([], depth=0)
     {}
     """
 
-counter_gather = gather_into(collections.Counter, update)
-counter_gather.__doc__ = """Gather values into Counters by keys.
+counter_assort = assort_into(collections.Counter, update)
+counter_assort.__doc__ = """Assort values into Counters by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
-    >>> keysvalues.counter_gather([(2, 0), (3, 1), (2, 1), (2, 0)])
+    >>> keysvalues.counter_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: Counter({0: 2, 1: 1}), 3: Counter({1: 1})}
-    >>> keysvalues.counter_gather([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
+    >>> keysvalues.counter_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
     {5: {2: Counter({0: 2}), 3: Counter({1: 1})}, 4: {2: Counter({1: 1})}}
-    >>> keysvalues.counter_gather([(0,), (1,), (1,), (0,)], depth=0)
+    >>> keysvalues.counter_assort([(0,), (1,), (1,), (0,)], depth=0)
     Counter({0: 2, 1: 2})
-    >>> keysvalues.counter_gather([])
+    >>> keysvalues.counter_assort([])
     {}
-    >>> keysvalues.counter_gather([], depth=0)
+    >>> keysvalues.counter_assort([], depth=0)
     Counter()
     """
