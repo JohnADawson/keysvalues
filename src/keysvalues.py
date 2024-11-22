@@ -15,10 +15,6 @@
 Instead of a key function and an iterable of values, an iterable of
 key-value pairs each function of this module takes.
 
-To import it run
-
->>> import keysvalues
-
 Functions
 ---------
 minimum
@@ -53,6 +49,7 @@ def minimum(items):
     items ought to be a non-empty iterable each member whereof is an
     iterable of a key and a value.
 
+    >>> import keysvalues
     >>> keysvalues.minimum([(1, 8), (0, 9), (0, 8)])
     9
     """
@@ -67,6 +64,7 @@ def maximum(items):
     items ought to be a non-empty iterable each member whereof is an
     iterable of a key and a value.
 
+    >>> import keysvalues
     >>> keysvalues.maximum([(0, 9), (1, 8), (1, 9)])
     8
     """
@@ -81,6 +79,7 @@ def sort(items, *, reverse=False):
     items ought to be an iterable each member whereof is an iterable of
     a key and a value.
 
+    >>> import keysvalues
     >>> keysvalues.sort([(2, 7), (1, 9), (0, 8), (1, 8)])
     [8, 9, 8, 7]
     >>> keysvalues.sort([(2, 7), (1, 9), (0, 8), (1, 8)], reverse=True)
@@ -99,6 +98,7 @@ def group(items):
     items ought to be an iterable each member whereof is an iterable of
     a key and a value.
 
+    >>> import keysvalues
     >>> groups = keysvalues.group([(1, 8), (1, 9), (0, 7), (0, 7), (1, 7)])
     >>> [(key, list(group)) for key, group in groups]
     [(1, [8, 9]), (0, [7, 7]), (1, [7])]
@@ -142,6 +142,7 @@ list_assort.__doc__ = """Assort values into lists by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
+    >>> import keysvalues
     >>> keysvalues.list_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: [0, 1, 0], 3: [1]}
     >>> keysvalues.list_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
@@ -159,6 +160,7 @@ set_assort.__doc__ = """Assort values into sets by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
+    >>> import keysvalues
     >>> keysvalues.set_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: {0, 1}, 3: {1}}
     >>> keysvalues.set_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
@@ -182,6 +184,7 @@ dict_assort.__doc__ = """Assort values into dicts by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
+    >>> import keysvalues
     >>> keysvalues.dict_assort([(5, (2, 0)), (5, (3, 1)), (4, (2, 1)), (5, (2, 0))])
     {5: {2: 0, 3: 1}, 4: {2: 1}}
     >>> keysvalues.dict_assort(
@@ -202,6 +205,7 @@ counter_assort.__doc__ = """Assort values into Counters by keys.
 
     To make reading easier, defaultdicts are written as dicts.
 
+    >>> import keysvalues
     >>> keysvalues.counter_assort([(2, 0), (3, 1), (2, 1), (2, 0)])
     {2: Counter({0: 2, 1: 1}), 3: Counter({1: 1})}
     >>> keysvalues.counter_assort([(5, 2, 0), (5, 3, 1), (4, 2, 1), (5, 2, 0)], depth=2)
