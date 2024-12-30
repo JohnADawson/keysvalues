@@ -6,7 +6,7 @@ To install the package run `pip install keysvalues`.
 The documentation is in the
 [docstrings](https://github.com/JohnADawson/keysvalues/blob/master/src/keysvalues.py).
 
-# Copyright Notice
+# Copyright and License
 
 Copyright (C) 2024 John Dawson
 
